@@ -10,3 +10,6 @@ IronElevatorsに触発されて作った、マインクラフトのエレベー�
 
 ・上昇/下降それぞれで効果音設定可能
 
+##ダウンロード
+
+[こちら](https://github.com/nuIlpointer/Eleporter/releases)から最新のjarファイルをダウンロードできます
