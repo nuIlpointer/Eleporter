@@ -1,0 +1,8 @@
+name: Eleporter
+version: ${project.version}
+main: com.nuiru.eleporter.Eleporter
+api-version: 1.16
+prefix: Eleporter
+authors: [nuilpointer]
+description: Elevator Plug-in Inspired by IronElevators
+website: https://nuiru.com

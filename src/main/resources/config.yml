@@ -1,0 +1,21 @@
+# Set the blocks to be used as elevators.
+# The defaults are as follows:
+#   targetblock:
+#     - DIAMOND_BLOCK
+#     - GLASS
+targetblock:
+  - DIAMOND_BLOCK
+  - GLASS
+
+# Teleportation detection range.
+# The defaults are as follows:
+#   range: 16
+range: 16
+
+# It is the sound you hear when you ascend.
+#   upSound: entity.puffer_fish.blow_up
+upSound: entity.puffer_fish.blow_up
+
+# It is the sound you hear when you descend.
+#   downSound: entity.puffer_fish.blow_out
+downSound: entity.puffer_fish.blow_out
