@@ -42,24 +42,42 @@ public final class Eleporter extends JavaPlugin implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player p = event.getPlayer();
+        //下のブロック検知
         if(p.getVelocity().getY() > 0 ) {
             Location l = p.getLocation();
             l.setY(l.getY() - 1);
             Block b = l.getWorld().getBlockAt(l);
             Material belowMaterial = b.getType();
+            //下のブロックがコンフィグに存在するものか検知
             for(String s : config.getStringList("targetblock")) {
+                //存在したとき
                 if(Material.valueOf(s) == belowMaterial) {
                     Location detectRange = p.getLocation();
                     boolean upperBlock = false;
+                    //上にテレポート可能なブロックが存在するか
                     for(int i = 0; i < config.getInt("range", 16); i++) {
                         Material m = l.getWorld().getBlockAt(detectRange).getType();
                         for(String ss : config.getStringList("targetblock")) {
+                            //存在したとき
                             if(Material.valueOf(ss) == m) {
-                                detectRange.setY(detectRange.getY() + 1);
-                                p.teleport(detectRange);
-                                String sound = config.getString("upSound", "entity.puffer_fish.blow_up");
-                                p.playSound(p.getLocation(), sound, 1, 1);
-                                upperBlock = true;
+                                //テレポート先が埋まらないか確認
+                                boolean teleportable = true;
+                                Location upperBlockChkLoc = detectRange;
+                                for(int j = 0; j < 2; j++) {
+                                    upperBlockChkLoc.setY(upperBlockChkLoc.getY() + 1);
+                                    Block bb = l.getWorld().getBlockAt(upperBlockChkLoc);
+                                    if(!bb.isEmpty()) {
+                                        teleportable = false;
+                                    }
+                                }
+                                //テレポート
+                                if(teleportable) {
+                                    detectRange.setY(detectRange.getY() + 1);
+                                    p.teleport(detectRange);
+                                    String sound = config.getString("upSound", "entity.puffer_fish.blow_up");
+                                    p.playSound(p.getLocation(), sound, 1, 1);
+                                    upperBlock = true;
+                                }
                             }
                         }
                         if(upperBlock) break;
@@ -88,11 +106,24 @@ public final class Eleporter extends JavaPlugin implements Listener {
                         Material m = l.getWorld().getBlockAt(detectRange).getType();
                         for(String ss : config.getStringList("targetblock")) {
                             if(Material.valueOf(ss) == m) {
-                                detectRange.setY(detectRange.getY() + 1);
-                                p.teleport(detectRange);
-                                String sound = config.getString("downSound", "entity.puffer_fish.blow_out");
-                                p.playSound(p.getLocation(), sound, 1, 1);
-                                upperBlock = true;
+                                //テレポート先が埋まらないか確認
+                                boolean teleportable = true;
+                                Location upperBlockChkLoc = detectRange;
+                                for(int j = 0; j < 2; j++) {
+                                    upperBlockChkLoc.setY(upperBlockChkLoc.getY() + 1);
+                                    Block bb = l.getWorld().getBlockAt(upperBlockChkLoc);
+                                    if(!bb.isEmpty()) {
+                                        teleportable = false;
+                                    }
+                                }
+                                //テレポート
+                                if(teleportable) {
+                                    detectRange.setY(detectRange.getY() + 1);
+                                    p.teleport(detectRange);
+                                    String sound = config.getString("downSound", "entity.puffer_fish.blow_out");
+                                    p.playSound(p.getLocation(), sound, 1, 1);
+                                    upperBlock = true;
+                                }
                             }
                         }
                         if(upperBlock) break;
